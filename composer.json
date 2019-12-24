@@ -1,0 +1,24 @@
+{
+    "name": "sparklee/learn-doctrine-with-tdd",
+    "type": "project",
+    "description": "通过 TDD(测试驱动开发) 学习 Doctrine",
+    "keywords": [
+        "TDD",
+        "Doctrine"
+    ],
+    "license": "MIT",
+    "require": {
+        "doctrine/migrations": "^2.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.5"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/",
+            "Database\\Migrations": "database/migrations/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
