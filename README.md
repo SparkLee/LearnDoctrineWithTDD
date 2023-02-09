@@ -20,3 +20,5 @@ vendor/bin/doctrine-migrations migrate --no-interaction
 [Doctrine DBAL v2.10 文档](https://www.doctrine-project.org/projects/doctrine-dbal/en/2.10/index.html)
 
 [如何配置 Sqlite 连接](https://www.doctrine-project.org/projects/doctrine-dbal/en/2.10/reference/configuration.html)
+
+[ Laravel Doctrine 官网地址](http://laraveldoctrine.org/)
