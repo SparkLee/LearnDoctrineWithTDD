@@ -2,6 +2,7 @@
 
 namespace App\Domain\Member;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,6 +23,14 @@ class Member
      */
     private $username;
 
+    /**
+     * 玩家的订单列表（玩家可以自助查询自己的订单列表）
+     *
+     * @var Collection
+     * @ORM\OneToMany(targetEntity="App\Domain\Order\Order", mappedBy="member", fetch="EXTRA_LAZY")
+     */
+    private $orders;
+
     public function __construct(string $username)
     {
         $this->username = $username;
@@ -40,5 +49,10 @@ class Member
     public function __toString(): string
     {
         return "Member[id: {$this->id}, username: {$this->username}]";
+    }
+
+    public function getOrders(): Collection
+    {
+        return $this->orders;
     }
 }

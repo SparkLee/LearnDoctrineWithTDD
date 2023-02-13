@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Domain\Order\Order;
+use App\Http\Controllers\Responses\MemberOrderResponse;
 use App\Services\MemberService;
 use Illuminate\Http\JsonResponse;
 
@@ -15,9 +17,17 @@ class MemberController extends Controller
      */
     public function profile(int $id, MemberService $memberService)
     {
-        return response()->json([
-            'id' => $id,
-            'profile' => (string)$memberService->getProfileById($id),
-        ]);
+        $member = $memberService->getProfileById($id);
+
+        /** @var Order $firstOrder */
+        $firstOrder = $member->getOrders()->get(0);
+
+        return response()
+            ->json([
+                'id' => $id,
+                'profile' => (string)$member,
+                'firstOrder' => MemberOrderResponse::fromOrderEntity($firstOrder)->toArray(),
+            ])
+            ->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
 }

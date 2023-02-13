@@ -27,7 +27,11 @@ class ExampleTest extends TestCase
     public function testVisitMemberProfile()
     {
         $response = $this->get('/members/1/profile');
-        var_dump($response->getContent());
+        $response->assertJson([
+            'id' => 1,
+            'profile' => 'Member[id: 1, username: spark lee-63e492ac7b]',
+        ]);
+        // var_dump($response->getContent());
     }
 
 
