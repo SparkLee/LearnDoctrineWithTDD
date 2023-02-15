@@ -21,7 +21,7 @@
         <server name="APP_ENV" value="testing"/>
         <server name="BCRYPT_ROUNDS" value="4"/>
         <server name="CACHE_DRIVER" value="array"/>
-        <server name="DB_DATABASE" value="db_sdk_phpunit_test"/>
+        <server name="DB_DATABASE" value="laravel-doctrine-example-app"/>
         <!--
         <server name="DB_CONNECTION" value="sqlite"/>
         <server name="DB_DATABASE" value=":memory:"/>

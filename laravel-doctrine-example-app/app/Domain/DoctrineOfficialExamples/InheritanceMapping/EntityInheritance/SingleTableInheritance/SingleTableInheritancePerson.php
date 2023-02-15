@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Domain\DoctrineOfficialExamples\InheritanceMapping\EntityInheritance;
+namespace App\Domain\DoctrineOfficialExamples\InheritanceMapping\EntityInheritance\SingleTableInheritance;
 
+use App\Domain\DoctrineOfficialExamples\InheritanceMapping\EntityInheritance\SingleTableInheritance\DTO\PersonDTO;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\DiscriminatorColumn;
 use Doctrine\ORM\Mapping\DiscriminatorMap;
 use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\InheritanceType;
 
@@ -26,6 +28,7 @@ class SingleTableInheritancePerson
      * @var int|null
      *
      * @Id
+     * @GeneratedValue
      * @Column(type="integer")
      */
     private $id = null;
@@ -36,46 +39,33 @@ class SingleTableInheritancePerson
      * @Column(type="string")
      */
     private $name;
-}
 
-/**
- * @Entity
- */
-class SingleTableInheritanceEmployee extends SingleTableInheritancePerson
-{
-    /**
-     * @var int|null
-     *
-     * @Id
-     * @Column(type="integer")
-     */
-    private $id = null;
-
-    /**
-     * @var string
-     *
-     * @Column(type="string")
-     */
-    private $age;
-}
-
-/**
- * @Entity
- */
-class SingleTableInheritanceCEO extends SingleTableInheritanceEmployee
-{
     /**
      * @var int
      *
      * @Column(type="integer")
      */
-    private $annualSalary;
-}
+    private $age;
 
-/**
- * @Entity
- */
-class SingleTableInheritanceCFO extends SingleTableInheritanceEmployee
-{
-}
+    private function __construct()
+    {
+    }
 
+    public static function createFromDTO($dto)
+    {
+        $person = new static();
+        $person->name = $dto->getName();
+        $person->age = $dto->getAge();
+        return $person;
+    }
+
+    public function greeting(): string
+    {
+        return sprintf("Hello, my name is %s, I am %d years old", $this->name, $this->age);
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+}
