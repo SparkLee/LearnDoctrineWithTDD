@@ -27,14 +27,19 @@ class SingleTableInheritancePersonTest extends TestCase
 
     public function test_should_only_create_employee_instance_from_dto()
     {
-        $employee = SingleTableInheritanceEmployee::createFromDTO(
+        $employee = $this->makeEmployee();
+        self::assertSame('foo001', $employee->getEmpNo());
+    }
+
+    private function makeEmployee(): SingleTableInheritanceEmployee
+    {
+        return SingleTableInheritanceEmployee::createFromDTO(
             (new EmployeeDTO())
                 ->setPersonDTO((new PersonDTO())
                     ->setName('lee')
                     ->setAge(35))
                 ->setEmpNo('foo001')
         );
-        self::assertSame('foo001', $employee->getEmpNo());
     }
 
     public function test_should_save_person()
@@ -54,13 +59,7 @@ class SingleTableInheritancePersonTest extends TestCase
 
     public function test_should_save_employee()
     {
-        $employee = SingleTableInheritanceEmployee::createFromDTO(
-            (new EmployeeDTO())
-                ->setPersonDTO((new PersonDTO())
-                    ->setName('lee')
-                    ->setAge(35))
-                ->setEmpNo('foo001')
-        );
+        $employee = $this->makeEmployee();
         EntityManager::persist($employee);
         EntityManager::flush();
 
@@ -68,5 +67,22 @@ class SingleTableInheritancePersonTest extends TestCase
         $lee = EntityManager::getRepository(SingleTableInheritanceEmployee::class)->findOneBy(['name' => 'lee']);
         self::assertSame('lee', $lee->getName());
         self::assertSame('foo001', $lee->getEmpNo());
+    }
+
+    public function test_should_update_employee()
+    {
+        $employee = $this->makeEmployee();
+        EntityManager::persist($employee);
+        EntityManager::flush();
+
+        /** @var SingleTableInheritanceEmployee $lee */
+        $lee = EntityManager::getRepository(SingleTableInheritanceEmployee::class)->findOneBy(['name' => 'lee']);
+        self::assertSame('lee', $lee->getName());
+        self::assertSame('foo001', $lee->getEmpNo());
+
+        $updatedEmployee = $lee->updateFromDTO((new EmployeeDTO())->setEmpNo('bar002'));
+        self::assertSame('bar002', $updatedEmployee->getEmpNo());
+        EntityManager::persist($updatedEmployee);
+        EntityManager::flush();
     }
 }

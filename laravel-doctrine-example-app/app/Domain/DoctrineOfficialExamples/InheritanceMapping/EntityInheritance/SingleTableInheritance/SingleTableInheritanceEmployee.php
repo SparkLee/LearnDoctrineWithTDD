@@ -2,6 +2,7 @@
 
 namespace App\Domain\DoctrineOfficialExamples\InheritanceMapping\EntityInheritance\SingleTableInheritance;
 
+use App\Domain\DoctrineOfficialExamples\InheritanceMapping\EntityInheritance\SingleTableInheritance\DTO\EmployeeDTO;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 
@@ -32,4 +33,12 @@ class SingleTableInheritanceEmployee extends SingleTableInheritancePerson
         return $this->empNo;
     }
 
+    /**
+     * @param EmployeeDTO $employeeDTO
+     */
+    public function updateFromDTO($employeeDTO)
+    {
+        $this->empNo = $employeeDTO->getEmpNo();
+        return $this;
+    }
 }
