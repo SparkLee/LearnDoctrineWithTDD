@@ -59,6 +59,15 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "doctrine-schema-recreate": [
+            "php artisan doctrine:clear:metadata:cache --flush",
+            "php artisan doctrine:schema:drop --force",
+            "php artisan doctrine:schema:create"
+        ],
+        "doctrine-schema-update": [
+            "php artisan doctrine:clear:metadata:cache --flush",
+            "php artisan doctrine:schema:update"
         ]
     }
 }
