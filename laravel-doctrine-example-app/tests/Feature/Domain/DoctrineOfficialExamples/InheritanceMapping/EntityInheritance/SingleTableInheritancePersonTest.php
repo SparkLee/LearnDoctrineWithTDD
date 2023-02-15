@@ -51,4 +51,22 @@ class SingleTableInheritancePersonTest extends TestCase
         $spark = EntityManager::getRepository(SingleTableInheritancePerson::class)->findOneBy(['name' => 'spark']);
         self::assertSame('spark', $spark->getName());
     }
+
+    public function test_should_save_employee()
+    {
+        $employee = SingleTableInheritanceEmployee::createFromDTO(
+            (new EmployeeDTO())
+                ->setPersonDTO((new PersonDTO())
+                    ->setName('lee')
+                    ->setAge(35))
+                ->setEmpNo('foo001')
+        );
+        EntityManager::persist($employee);
+        EntityManager::flush();
+
+        /** @var SingleTableInheritanceEmployee $lee */
+        $lee = EntityManager::getRepository(SingleTableInheritanceEmployee::class)->findOneBy(['name' => 'lee']);
+        self::assertSame('lee', $lee->getName());
+        self::assertSame('foo001', $lee->getEmpNo());
+    }
 }
