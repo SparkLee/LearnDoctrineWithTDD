@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Domain\Member\Member;
 use App\Domain\Member\MemberRepository;
+use Exception;
+use LaravelDoctrine\ORM\Facades\EntityManager;
 
 class MemberService
 {
@@ -28,5 +30,21 @@ class MemberService
     public function getProfile($username): Member
     {
         return $this->memberRepository->findByUsername($username);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function register()
+    {
+        EntityManager::beginTransaction();
+        try {
+            $member = new Member('testxxxxxxxxxxxxxxxxxxx');
+            $this->memberRepository->save($member);
+            EntityManager::commit();
+        } catch (Exception $e) {
+            EntityManager::rollback();
+            throw $e;
+        }
     }
 }
