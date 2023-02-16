@@ -6,7 +6,6 @@ use App\Domain\DoctrineOfficialExamples\InheritanceMapping\EntityInheritance\Sin
 use App\Domain\DoctrineOfficialExamples\InheritanceMapping\EntityInheritance\SingleTableInheritance\DTO\PersonDTO;
 use App\Domain\DoctrineOfficialExamples\InheritanceMapping\EntityInheritance\SingleTableInheritance\SingleTableInheritanceEmployee;
 use App\Domain\DoctrineOfficialExamples\InheritanceMapping\EntityInheritance\SingleTableInheritance\SingleTableInheritancePerson;
-use Illuminate\Support\Facades\DB;
 use LaravelDoctrine\ORM\Facades\EntityManager;
 use Tests\TestCase;
 
@@ -72,7 +71,7 @@ class SingleTableInheritancePersonTest extends TestCase
 
     public function test_should_update_employee()
     {
-        DB::delete("delete from single_table_inheritance_people where name = :name", ['name' => 'lee']);
+        // DB::delete("delete from single_table_inheritance_people where name = :name", ['name' => 'lee']);
 
         $employee = $this->makeEmployee();
         EntityManager::persist($employee);
