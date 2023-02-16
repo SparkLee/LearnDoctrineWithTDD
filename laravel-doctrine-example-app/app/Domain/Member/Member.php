@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Persistence\MemberRepositoryDoctrine")
  * @ORM\Table(name="c_members")
  */
 class Member
