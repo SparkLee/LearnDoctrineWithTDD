@@ -46,7 +46,7 @@ class MemberController extends Controller
     public function register()
     {
         try {
-            $this->memberService->register();
+            $this->memberService->register2();
             return response()->json('register successfully.');
         } catch (Exception $e) {
             return response()->json('holy shit: ' . $e->getMessage());

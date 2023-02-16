@@ -39,12 +39,23 @@ class MemberService
     {
         EntityManager::beginTransaction();
         try {
-            $member = new Member('testxxxxxxxxxxxxxxxxxxx');
+            $member = new Member('test');
             $this->memberRepository->save($member);
             EntityManager::commit();
         } catch (Exception $e) {
             EntityManager::rollback();
             throw $e;
         }
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function register2()
+    {
+        EntityManager::transactional(function (\Doctrine\ORM\EntityManager $em) {
+            $member = new Member('test');
+            $this->memberRepository->save($member);
+        });
     }
 }
