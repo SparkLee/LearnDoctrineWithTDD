@@ -25,6 +25,9 @@ Route::get('/', function () {
 
 Route::get('/members/{id}/profile', [MemberController::class, 'profile']);
 
+Route::put('/members/{id}', [MemberController::class, 'modify']);
+Route::get('/members/{id}', [MemberController::class, 'modify']);
+
 Route::post('/members', [MemberController::class, 'register']);
 Route::get('/members', [MemberController::class, 'register']);
 

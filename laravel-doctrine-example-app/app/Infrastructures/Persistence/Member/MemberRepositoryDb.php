@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Persistence;
+namespace App\Infrastructures\Persistence\Member;
 
 use App\Domain\Member\Member;
 use App\Domain\Member\MemberRepository;
 use Doctrine\ORM\EntityRepository;
 use LaravelDoctrine\ORM\Facades\EntityManager;
 
-class MemberRepositoryDoctrine extends EntityRepository implements MemberRepository
+class MemberRepositoryDb extends EntityRepository implements MemberRepository
 {
     public function save(Member $member)
     {
@@ -22,6 +22,13 @@ class MemberRepositoryDoctrine extends EntityRepository implements MemberReposit
 
     public function findById(int $id): Member
     {
-        return $this->find($id);
+        $member = $this->find($id);
+        return $this->setMyOrders($member);
+    }
+
+    private function setMyOrders(Member $member): Member
+    {
+        $member->setMyOrders(new MyOrdersDb($member));
+        return $member;
     }
 }

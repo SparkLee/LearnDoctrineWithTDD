@@ -4,8 +4,8 @@ namespace Tests\Feature;
 
 use App\Domain\Member\Member;
 use App\Domain\Member\MemberRepository;
-use App\Persistence\MemberRepositoryDoctrine;
-use App\Services\MemberService;
+use App\Infrastructures\Persistence\Member\MemberRepositoryDb;
+use App\Application\MemberService;
 use LaravelDoctrine\ORM\Facades\EntityManager;
 use Tests\TestCase;
 
@@ -69,7 +69,7 @@ class ExampleTest extends TestCase
     public function testDoctrine3()
     {
         // $repository = EntityManager::getRepository(Member::class);
-        $repository = new MemberRepositoryDoctrine(app('em'), app('em')->getClassMetaData(Member::class));
+        $repository = new MemberRepositoryDb(app('em'), app('em')->getClassMetaData(Member::class));
 
         $service = new MemberService($repository);
         $profile = $service->getProfile('spark lee-63e492ac7b');

@@ -2,12 +2,13 @@
 
 namespace App\Domain\Member;
 
+use App\Domain\Member\DTO\MemberDTO;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Persistence\MemberRepositoryDoctrine")
- * @ORM\Table(name="c_members")
+ * @ORM\Entity(repositoryClass="App\Infrastructures\Persistence\Member\MemberRepositoryDb")
+ * @ORM\Table(name="members")
  */
 class Member
 {
@@ -31,9 +32,20 @@ class Member
      */
     private $orders;
 
+    /**
+     * @var MyOrders
+     */
+    private $myOrders;
+
     public function __construct(string $username)
     {
         $this->username = $username;
+    }
+
+    public static function fromDTO(MemberDTO $dto): Member
+    {
+        $member = new static($dto->getUsername());
+        return $member;
     }
 
     public function getUserName(): string
@@ -54,5 +66,31 @@ class Member
     public function getOrders(): Collection
     {
         return $this->orders;
+    }
+
+    public function changeUsername(string $username): self
+    {
+        if (empty($username)) {
+            throw new \InvalidArgumentException("username cannot be empty");
+        }
+
+        $this->username = $username;
+        return $this;
+    }
+
+    /**
+     * @return MyOrders
+     */
+    public function getMyOrders(): MyOrders
+    {
+        return $this->myOrders;
+    }
+
+    /**
+     * @param MyOrders $myOrders
+     */
+    public function setMyOrders(MyOrders $myOrders): void
+    {
+        $this->myOrders = $myOrders;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Application;
 
 use App\Domain\Member\Member;
 use App\Domain\Member\MemberRepository;
@@ -55,6 +55,20 @@ class MemberService
     {
         EntityManager::transactional(function (\Doctrine\ORM\EntityManager $em) {
             $member = new Member('test');
+            $this->memberRepository->save($member);
+        });
+    }
+
+    public function modify(int $id)
+    {
+        EntityManager::transactional(function () use ($id) {
+            $member = $this->memberRepository->findById($id);
+
+            print_r(sprintf("username: %s\n", $member->getUserName()));
+
+            // sleep(30);
+
+            $member->changeUsername("111");
             $this->memberRepository->save($member);
         });
     }

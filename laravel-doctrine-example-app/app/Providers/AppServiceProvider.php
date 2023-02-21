@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use App\Domain\Member\Member;
 use App\Domain\Member\MemberRepository;
-use App\Persistence\MemberRepositoryDoctrine;
+use App\Infrastructures\Persistence\Member\MemberRepositoryDb;
 use Illuminate\Support\ServiceProvider;
 use LaravelDoctrine\ORM\Facades\EntityManager;
 
@@ -19,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(MemberRepository::class, function ($app) {
             // return EntityManager::getRepository(Member::class);
-            return new MemberRepositoryDoctrine(app('em'), app('em')->getClassMetaData(Member::class));
+            return new MemberRepositoryDb(app('em'), app('em')->getClassMetaData(Member::class));
         });
     }
 

@@ -3,11 +3,12 @@
 namespace App\Domain\Order;
 
 use App\Domain\Member\Member;
+use App\Domain\Order\DTO\OrderDTO;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="c_pay")
+ * @ORM\Entity(repositoryClass="App\Infrastructures\Persistence\OrderRepositoryDb")
+ * @ORM\Table(name="pay")
  */
 class Order
 {
@@ -35,6 +36,20 @@ class Order
      */
     private $member;
 
+    private function __construct()
+    {
+
+    }
+
+    public static function fromDTO(OrderDTO $dto): Order
+    {
+        $order = new static();
+        $order->amount = $dto->getAmount();
+        $order->orderNo = $dto->getOrderNo();
+        $order->member = $dto->getMember();
+        return $order;
+    }
+
     public function getOrderNo(): string
     {
         return $this->orderNo;
@@ -43,5 +58,16 @@ class Order
     public function getAmount(): float
     {
         return $this->amount;
+    }
+
+    public function getMember(): Member
+    {
+        return $this->member;
+    }
+
+    public function setMember(Member $member): Order
+    {
+        $this->member = $member;
+        return $this;
     }
 }
