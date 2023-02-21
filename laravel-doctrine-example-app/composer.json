@@ -68,6 +68,10 @@
         "doctrine-schema-update": [
             "php artisan doctrine:clear:metadata:cache --flush",
             "php artisan doctrine:schema:update"
+        ],
+        "doctrine-clear-cache-and-generate": [
+            "@php artisan doctrine:clear:metadata:cache --flush",
+            "@php artisan doctrine:generate:proxies"
         ]
     }
 }
