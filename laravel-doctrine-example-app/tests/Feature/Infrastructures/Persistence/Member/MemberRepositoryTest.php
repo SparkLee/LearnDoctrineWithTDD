@@ -52,5 +52,10 @@ class MemberRepositoryTest extends TestCase
         $orders2 = $member->getOrders()->slice(2, 1);
         $this->assertCount(1, $orders2);
         self::assertSame('333', $orders2[0]->getOrderNo());
+
+        self::assertSame(3, $member->getOrders()->count());
+        self::assertTrue($member->getOrders()->contains($orders1[0]));
+        self::assertTrue($member->getOrders()->containsKey(0));
+        self::assertSame('111', $member->getOrders()->get(0)->getOrderNo());
     }
 }
